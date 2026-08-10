@@ -1,4 +1,7 @@
 import logging
+import threading
+import time
+import httpx
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.config import settings
@@ -39,6 +42,18 @@ def root_directory():
         "datasets": "/api/datasets"
     }
 
+def keep_alive_heartbeat():
+    """Background heartbeat pinging Render every 10 minutes to prevent cold-start sleeping."""
+    target_url = "https://datahub-agentic-dbt.onrender.com/api/health"
+    while True:
+        try:
+            time.sleep(600)  # Ping every 10 minutes (Render sleep threshold is 15 minutes)
+            with httpx.Client(timeout=10.0) as client:
+                res = client.get(target_url)
+                logger.info(f"[HEARTBEAT] Keep-alive ping sent to {target_url} -> Status: {res.status_code}")
+        except Exception as e:
+            logger.warning(f"[HEARTBEAT] Keep-alive ping cycle error: {e}")
+
 @app.on_event("startup")
 def startup_security_audit():
     logger.info("=== Security Audit & Configuration Check ===")
@@ -49,6 +64,10 @@ def startup_security_audit():
     logger.info(f"Gemini API Key: {mask_secret(settings.GEMINI_API_KEY)}")
     logger.info(f"DataHub Token: {mask_secret(settings.DATAHUB_TOKEN)}")
     logger.info("============================================")
+    
+    # Launch Keep-Alive Heartbeat Thread
+    threading.Thread(target=keep_alive_heartbeat, daemon=True).start()
+    logger.info("[HEARTBEAT] Automated Render keep-alive thread started (10-minute interval).")
 
 if __name__ == "__main__":
     import uvicorn
