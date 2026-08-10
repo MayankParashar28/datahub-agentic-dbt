@@ -10,12 +10,23 @@ Traditional AI SQL generators blindly invent column names, assume currency units
 
 > **DataHub metadata is the source of truth.**
 
-If metadata is missing (e.g. currency definition, column description), the agent **does not invent it**. Instead, it:
-1. Surfaces the metadata gap explicitly in the UI and README documentation.
-2. Formulates a conservative engineering assumption.
-3. Computes a transparent **0-100 Metadata Quality Score**.
-4. Uses `sqlglot` AST parsing to detect hallucinated column or table references, running an automatic self-repair loop (up to 3 retries).
-5. Publishes the generated model, AI tags, README documentation, and upstream lineage back to DataHub.
+### 🏆 The 5 Visionary Architectural Principles (Only Possible with DataHub)
+
+1. **Turning DataHub Glossary into a Semantic Type System**:
+   - Syntactically valid SQL can be semantically corrupt (e.g. summing USD and EUR, or summing rates/percentages like `average_order_value`).
+   - We treat DataHub glossary terms as a **semantic type checker**, rejecting nonsense queries that pass standard SQL linters.
+   
+2. **Making Hallucinations Structurally Unrepresentable**:
+   - Rather than just retrying free-text LLM generation, the agent constructs a symbol table from DataHub's verified schema contract, ensuring zero unverified table or column references exist by construction.
+
+3. **Catalog as the Agent's Long-Term Memory**:
+   - Human feedback and model conventions are written back into DataHub as documentation and tags, creating a self-improving feedback loop directly inside the catalog.
+
+4. **Provenance Receipts for Regulated Compliance**:
+   - Every line of generated SQL carries an explicit citation to the exact DataHub metadata asset (glossary term, primary key, or PII tag) that justified its creation.
+
+5. **Empirical Ensemble Verification**:
+   - Disagreements across multi-strategy SQL generation paths are used to detect metadata ambiguities empirically rather than relying on LLM self-reported confidence.
 
 ---
 

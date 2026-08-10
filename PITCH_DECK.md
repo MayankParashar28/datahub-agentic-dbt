@@ -29,17 +29,19 @@
 ---
 
 ## Slide 3: Core Architecture & Differentiation
-1. **0–100 Metadata Quality Scoring & Gap Detection**:
+
+1. **DataHub Glossary as a Semantic Type System** ⭐ *(Winning Thesis)*:
+   - Traditional linters pass syntactically valid SQL that is semantically corrupt (e.g. summing `usd_revenue` and `eur_cost`, or summing rates like `average_order_value`).
+   - We treat DataHub glossary terms as a **semantic type checker**, catching meaning errors that no standard SQL linter can detect.
+
+2. **0–100 Metadata Quality Scoring & Gap Detection**:
    - Evaluates schema completeness, documentation coverage, and lineage edges.
    - Detects gaps like `UNDEFINED_CURRENCY` or `MISSING_DESCRIPTION`.
    - **Ground-Truth Principle**: The AI never guesses missing metadata or fabricates columns; it explicitly surfaces gaps as engineering assumptions.
 
-2. **Structured Reasoning Engine**:
-   - Formulates model grain, derived CTE arithmetic, dbt test assertions (`unique`, `not_null`, `relationships`), and an auditing decision log.
-
-3. **`sqlglot` AST Validation & 3-Retry Self-Repair Loop**:
-   - Parses generated SQL into Abstract Syntax Trees to verify table and column references against DataHub metadata contracts.
-   - Automatically repairs SQL syntax or schema mismatch errors before user review.
+3. **`sqlglot` Multi-Dialect AST Validation & 3-Retry Self-Repair Loop**:
+   - Parses generated SQL into Abstract Syntax Trees across `snowflake`, `postgres`, `bigquery`, and `duckdb` dialects to verify table and column references against DataHub metadata contracts.
+   - All validation checks (Syntax, Source Bounds, Column Existence, Semantic Type Safety) are green by construction.
 
 4. **Closed-Loop DataHub Lineage Write-Back**:
    - Publishes newly generated dbt models back to DataHub with `ai-generated` tags, documentation aspects, and upstream/downstream lineage graph edges.

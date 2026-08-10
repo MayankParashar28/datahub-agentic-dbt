@@ -52,28 +52,28 @@ export const ArtifactsViewer: React.FC<ArtifactsViewerProps> = ({ artifacts }) =
   };
 
   return (
-    <div className="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-md flex flex-col h-full">
+    <div className="bg-slate-900/90 border border-slate-800 rounded-2xl overflow-hidden shadow-2xl backdrop-blur-md flex flex-col h-full">
       {/* Tab Navigation Header */}
-      <div className="border-b border-slate-200 bg-slate-50 px-4 pt-3 flex flex-wrap items-center justify-between gap-2">
+      <div className="border-b border-slate-800 bg-slate-950/60 px-4 pt-3 flex flex-wrap items-center justify-between gap-2">
         <div className="flex space-x-1">
           <button
             onClick={() => setActiveTab('sql')}
-            className={`flex items-center space-x-2 px-4 py-2.5 text-xs font-bold rounded-t-xl transition border-t-2 ${
+            className={`flex items-center space-x-2 px-4 py-2.5 text-xs font-mono font-bold rounded-t-xl transition border-t-2 ${
               activeTab === 'sql'
-                ? 'bg-[#0F172A] text-white border-slate-900 font-mono'
-                : 'text-slate-700 hover:text-slate-900 border-transparent font-mono'
+                ? 'bg-slate-900 text-cyan-400 border-cyan-400'
+                : 'text-slate-400 hover:text-white border-transparent'
             }`}
           >
-            <FileCode className="w-4 h-4 text-sky-400" />
+            <FileCode className="w-4 h-4 text-cyan-400" />
             <span>{artifacts.model_name}.sql</span>
           </button>
 
           <button
             onClick={() => setActiveTab('yaml')}
-            className={`flex items-center space-x-2 px-4 py-2.5 text-xs font-bold rounded-t-xl transition border-t-2 ${
+            className={`flex items-center space-x-2 px-4 py-2.5 text-xs font-mono font-bold rounded-t-xl transition border-t-2 ${
               activeTab === 'yaml'
-                ? 'bg-[#0F172A] text-white border-slate-900 font-mono'
-                : 'text-slate-700 hover:text-slate-900 border-transparent font-mono'
+                ? 'bg-slate-900 text-emerald-400 border-emerald-400'
+                : 'text-slate-400 hover:text-white border-transparent'
             }`}
           >
             <Terminal className="w-4 h-4 text-emerald-400" />
@@ -82,10 +82,10 @@ export const ArtifactsViewer: React.FC<ArtifactsViewerProps> = ({ artifacts }) =
 
           <button
             onClick={() => setActiveTab('readme')}
-            className={`flex items-center space-x-2 px-4 py-2.5 text-xs font-bold rounded-t-xl transition border-t-2 ${
+            className={`flex items-center space-x-2 px-4 py-2.5 text-xs font-mono font-bold rounded-t-xl transition border-t-2 ${
               activeTab === 'readme'
-                ? 'bg-[#0F172A] text-white border-slate-900 font-mono'
-                : 'text-slate-700 hover:text-slate-900 border-transparent font-mono'
+                ? 'bg-slate-900 text-amber-400 border-amber-400'
+                : 'text-slate-400 hover:text-white border-transparent'
             }`}
           >
             <FileText className="w-4 h-4 text-amber-400" />
@@ -93,21 +93,20 @@ export const ArtifactsViewer: React.FC<ArtifactsViewerProps> = ({ artifacts }) =
           </button>
         </div>
 
-        {/* Copy, Download File & Download dbt Project ZIP Actions */}
+        {/* Actions */}
         <div className="flex items-center space-x-2 py-1">
           <button
             onClick={handleDownloadZip}
             disabled={isExportingZip}
-            className="flex items-center space-x-1.5 text-xs font-bold text-indigo-950 bg-indigo-100 hover:bg-indigo-200 px-3 py-1.5 rounded-lg border border-indigo-300 transition shadow-sm"
-            title="Download complete ready-to-run dbt project archive"
+            className="flex items-center space-x-1.5 text-xs font-mono font-bold text-cyan-400 bg-cyan-500/10 hover:bg-cyan-500/20 px-3 py-1.5 rounded-lg border border-cyan-500/30 transition shadow-sm"
           >
-            <Archive className="w-3.5 h-3.5 text-indigo-700" />
+            <Archive className="w-3.5 h-3.5 text-cyan-400" />
             <span>{isExportingZip ? 'Exporting...' : 'Export dbt Project (.ZIP)'}</span>
           </button>
 
           <button
             onClick={handleDownloadSingleFile}
-            className="flex items-center space-x-1.5 text-xs font-bold text-slate-800 hover:text-black bg-slate-200 hover:bg-slate-300 px-3 py-1.5 rounded-lg border border-slate-300 transition"
+            className="flex items-center space-x-1.5 text-xs font-mono font-bold text-slate-300 hover:text-white bg-slate-800 hover:bg-slate-700 px-3 py-1.5 rounded-lg border border-slate-700 transition"
           >
             <Download className="w-3.5 h-3.5" />
             <span>File</span>
@@ -115,12 +114,12 @@ export const ArtifactsViewer: React.FC<ArtifactsViewerProps> = ({ artifacts }) =
 
           <button
             onClick={handleCopy}
-            className="flex items-center space-x-1.5 text-xs font-bold text-white bg-slate-900 hover:bg-black px-3 py-1.5 rounded-lg transition border border-slate-900 shadow-sm"
+            className="flex items-center space-x-1.5 text-xs font-mono font-bold text-slate-950 bg-cyan-400 hover:bg-cyan-300 px-3 py-1.5 rounded-lg transition border border-cyan-400 shadow-sm"
           >
             {copied ? (
               <>
-                <Check className="w-3.5 h-3.5 text-emerald-400" />
-                <span className="text-emerald-400">Copied!</span>
+                <Check className="w-3.5 h-3.5 text-slate-950" />
+                <span>Copied!</span>
               </>
             ) : (
               <>
@@ -133,19 +132,19 @@ export const ArtifactsViewer: React.FC<ArtifactsViewerProps> = ({ artifacts }) =
       </div>
 
       {/* Code Editor Frame */}
-      <div className="p-4 bg-[#0F172A] font-mono text-xs text-slate-100 overflow-auto max-h-[520px] leading-relaxed">
+      <div className="p-4 bg-slate-950 font-mono text-xs text-slate-200 overflow-auto max-h-[520px] leading-relaxed">
         <pre className="whitespace-pre-wrap">
           <code>{getActiveContent()}</code>
         </pre>
       </div>
 
       {/* Code Footer info */}
-      <div className="border-t border-slate-200 bg-slate-50 px-4 py-2 flex items-center justify-between text-[11px] text-slate-600 font-medium">
-        <span className="flex items-center space-x-1.5 font-bold text-emerald-800">
-          <ShieldCheck className="w-3.5 h-3.5 text-emerald-600 inline" />
+      <div className="border-t border-slate-800 bg-slate-950/60 px-4 py-2 flex items-center justify-between text-[11px] text-slate-400 font-medium">
+        <span className="flex items-center space-x-1.5 font-bold text-emerald-400">
+          <ShieldCheck className="w-3.5 h-3.5 text-emerald-400 inline" />
           <span>Verified against DataHub schema contracts</span>
         </span>
-        <span className="font-mono font-bold text-slate-800">Generator: {artifacts.generator_version}</span>
+        <span className="font-mono font-bold text-cyan-400">Generator: {artifacts.generator_version}</span>
       </div>
     </div>
   );

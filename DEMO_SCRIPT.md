@@ -30,7 +30,7 @@ This step-by-step guide helps you present **DataHub dbt Forge** to hackathon jud
 
 ---
 
-## ⏱️ Minute 1:30 – 2:15 | Tab 2 & 3: Multi-Dataset Join & AST Validation
+## ⏱️ Minute 1:30 – 2:15 | Tab 2 & 3: Multi-Dataset Join & Glossary Type Checker
 
 **Visual Action**:
 1. Under **Join Dimension (Optional)**, select **`JOIN retail.customers`**.
@@ -40,12 +40,11 @@ This step-by-step guide helps you present **DataHub dbt Forge** to hackathon jud
 **Speaker Narration**:
 > *"Watch what happens when we generate a multi-table join model. Our reasoning agent discovers foreign key relationships between `orders.customer_id` and `customers.customer_id` directly from DataHub.*
 >
-> *In Tab 3, the agent produced three complete artifacts:
-> 1. Executable, CTE-structured SQL (`fct_customer_orders.sql`)
-> 2. Schema assertions (`schema.yml`) with `unique`, `not_null`, and `relationships` tests.
-> 3. Rich model documentation (`README.md`).
+> *Look at our validation panel: Every check is **100% GREEN by construction**.*
 >
-> Before showing this code to the user, our backend ran **`sqlglot` Abstract Syntax Tree validation**. Every table and column reference was verified against DataHub schema contracts — guaranteeing **100% zero column hallucinations**."*
+> *Here is our biggest technical breakthrough: We turned DataHub's Business Glossary into a **Semantic Type System**. Standard SQL linters pass queries that sum USD and EUR or sum rates like average order values because the SQL syntax is valid. But our agent type-checks the SQL against DataHub's glossary terms and rejects semantically corrupt logic.*
+>
+> ***This SQL is syntactically perfect, but semantically wrong — and the ONLY reason we can catch it is the DataHub Glossary type checker!***"*
 
 ---
 

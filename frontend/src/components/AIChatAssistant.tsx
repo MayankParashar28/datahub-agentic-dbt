@@ -30,16 +30,16 @@ export const AIChatAssistant: React.FC<AIChatAssistantProps> = ({ metadata }) =>
 
   const defaultSuggestions = metadata
     ? [
-        `Explain quality score for ${metadata.name}`,
-        `Show lineage graph for ${metadata.name}`,
-        `List all columns in ${metadata.name}`,
-        `Suggest dbt model strategy`
-      ]
+      `Explain quality score for ${metadata.name}`,
+      `Show lineage graph for ${metadata.name}`,
+      `List all columns in ${metadata.name}`,
+      `Suggest dbt model strategy`
+    ]
     : [
-        'How does DataHub quality scoring work?',
-        'What datasets are available?',
-        'How are dbt models validated?'
-      ];
+      'How does DataHub quality scoring work?',
+      'What datasets are available?',
+      'How are dbt models validated?'
+    ];
 
   const handleSend = async (textToSend?: string) => {
     const query = textToSend || input;
@@ -105,34 +105,30 @@ export const AIChatAssistant: React.FC<AIChatAssistantProps> = ({ metadata }) =>
         {messages.map((msg) => (
           <div
             key={msg.id}
-            className={`flex items-start space-x-3 ${
-              msg.role === 'user' ? 'flex-row-reverse space-x-reverse' : ''
-            }`}
+            className={`flex items-start space-x-3 ${msg.role === 'user' ? 'flex-row-reverse space-x-reverse' : ''
+              }`}
           >
             <div
-              className={`p-2 rounded-lg shrink-0 ${
-                msg.role === 'user'
+              className={`p-2 rounded-lg shrink-0 ${msg.role === 'user'
                   ? 'bg-blue-600 text-white'
                   : 'bg-slate-800 text-blue-400 border border-slate-700'
-              }`}
+                }`}
             >
               {msg.role === 'user' ? <User className="w-4 h-4" /> : <Bot className="w-4 h-4" />}
             </div>
 
             <div
-              className={`max-w-[80%] rounded-xl p-4 ${
-                msg.role === 'user'
+              className={`max-w-[80%] rounded-xl p-4 ${msg.role === 'user'
                   ? 'bg-blue-600 text-white rounded-tr-none'
                   : 'bg-slate-800/80 text-slate-200 border border-slate-700/60 rounded-tl-none'
-              }`}
+                }`}
             >
               <div className="whitespace-pre-wrap leading-relaxed">
                 {msg.content}
               </div>
               <div
-                className={`text-[10px] mt-2 ${
-                  msg.role === 'user' ? 'text-blue-200 text-right' : 'text-slate-400'
-                }`}
+                className={`text-[10px] mt-2 ${msg.role === 'user' ? 'text-blue-200 text-right' : 'text-slate-400'
+                  }`}
               >
                 {msg.timestamp}
               </div>
