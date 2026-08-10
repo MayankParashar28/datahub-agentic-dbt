@@ -5,7 +5,7 @@ import httpx
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.config import settings
-from app.api import health, datasets, generation
+from app.api import health, datasets, generation, chat
 from app.security.sanitizer import mask_secret
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(name)s: %(message)s")
@@ -30,6 +30,7 @@ app.add_middleware(
 app.include_router(health.router, prefix="/api", tags=["Health"])
 app.include_router(datasets.router, prefix="/api", tags=["Datasets"])
 app.include_router(generation.router, prefix="/api", tags=["Generation"])
+app.include_router(chat.router, prefix="/api", tags=["Chat"])
 
 @app.get("/")
 def root_directory():

@@ -76,3 +76,19 @@ export async function downloadProjectZip(artifacts: GeneratedArtifacts): Promise
   window.URL.revokeObjectURL(url);
   document.body.removeChild(a);
 }
+
+export async function sendChatMessage(datasetUrn: string, message: string): Promise<{ reply: string; dataset_urn: string; suggestions: string[] }> {
+  const res = await fetch(`${API_BASE}/chat`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      dataset_urn: datasetUrn,
+      message: message
+    })
+  });
+  if (!res.ok) {
+    const err = await res.json();
+    throw new Error(err.detail || 'Chat request failed');
+  }
+  return res.json();
+}

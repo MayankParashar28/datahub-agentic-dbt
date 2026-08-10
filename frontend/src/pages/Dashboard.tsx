@@ -9,7 +9,8 @@ import { ReasoningCard } from '../components/ReasoningCard';
 import { ArtifactsViewer } from '../components/ArtifactsViewer';
 import { ValidationStatusCard } from '../components/ValidationStatusCard';
 import { DataHubWritebackModal } from '../components/DataHubWritebackModal';
-import { Sparkles, X, FileText, Layers, ShieldCheck, Brain, FileCode } from 'lucide-react';
+import { AIChatAssistant } from '../components/AIChatAssistant';
+import { Sparkles, X, FileText, Layers, ShieldCheck, Brain, FileCode, MessageSquare } from 'lucide-react';
 
 export const Dashboard: React.FC = () => {
   const [datasets, setDatasets] = useState<{ urn: string; name: string; platform: string; description?: string; domain?: string }[]>([]);
@@ -25,7 +26,7 @@ export const Dashboard: React.FC = () => {
   const [publishedResult, setPublishedResult] = useState<WritebackResult | null>(null);
   const [demoMode, setDemoMode] = useState(true);
   
-  const [activeTab, setActiveTab] = useState<'context' | 'reasoning' | 'artifacts'>('context');
+  const [activeTab, setActiveTab] = useState<'context' | 'reasoning' | 'artifacts' | 'chat'>('context');
 
   const [showExamplesModal, setShowExamplesModal] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
@@ -115,7 +116,7 @@ export const Dashboard: React.FC = () => {
 
         {/* Master Studio Tab Navigation */}
         <div className="flex items-center justify-between border-b border-slate-200 pb-1">
-          <div className="flex space-x-2">
+          <div className="flex space-x-2 flex-wrap gap-y-2">
             <button
               onClick={() => setActiveTab('context')}
               className={`flex items-center space-x-2 px-5 py-3 text-xs font-extrabold rounded-2xl transition border ${
@@ -165,6 +166,21 @@ export const Dashboard: React.FC = () => {
                   ✓ Verified
                 </span>
               )}
+            </button>
+
+            <button
+              onClick={() => setActiveTab('chat')}
+              className={`flex items-center space-x-2 px-5 py-3 text-xs font-extrabold rounded-2xl transition border ${
+                activeTab === 'chat'
+                  ? 'bg-blue-600 text-white border-blue-600 shadow-md font-mono'
+                  : 'bg-white text-slate-700 border-slate-200 hover:text-slate-900 hover:border-slate-300'
+              }`}
+            >
+              <MessageSquare className="w-4 h-4 text-blue-300" />
+              <span>4. 💬 AI Data Assistant Chat</span>
+              <span className="ml-1 bg-blue-500/30 text-blue-200 px-2 py-0.5 rounded-full font-mono text-[10px]">
+                Interactive
+              </span>
             </button>
           </div>
         </div>
@@ -246,6 +262,13 @@ export const Dashboard: React.FC = () => {
                 <ArtifactsViewer artifacts={artifacts} />
               </>
             )}
+          </div>
+        )}
+
+        {/* Tab 4: AI Data Assistant Chat */}
+        {activeTab === 'chat' && (
+          <div className="space-y-6">
+            <AIChatAssistant metadata={metadata} />
           </div>
         )}
       </main>
