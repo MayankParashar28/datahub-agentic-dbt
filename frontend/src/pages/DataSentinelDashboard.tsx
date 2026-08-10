@@ -127,7 +127,7 @@ export const DataSentinelDashboard: React.FC<DataSentinelDashboardProps> = ({
   return (
     <div className="min-h-screen bg-[#070A11] text-slate-100 font-sans flex flex-col selection:bg-cyan-500 selection:text-slate-950">
       {/* Top Header */}
-      <header className="border-b border-slate-800 bg-[#070A11]/90 backdrop-blur-md px-6 py-3 sticky top-0 z-50">
+      <header className="border-b border-slate-800 bg-[#070A11]/90 backdrop-blur-md px-6 py-3.5 sticky top-0 z-50">
         <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
           <div className="flex items-center space-x-3.5">
             <div className="w-10 h-10 rounded-xl bg-slate-900 border border-cyan-500/40 overflow-hidden shadow-lg shadow-cyan-500/10 p-0.5 shrink-0">
@@ -142,9 +142,7 @@ export const DataSentinelDashboard: React.FC<DataSentinelDashboardProps> = ({
                   v2.4
                 </span>
               </div>
-              <p className="text-[10px] font-mono tracking-wider uppercase text-cyan-400/90 font-bold">
-                CONTEXT BEFORE CODE
-              </p>
+              <p className="text-xs text-slate-400 font-medium">AI Data Intelligence & Governance Platform</p>
             </div>
           </div>
 
