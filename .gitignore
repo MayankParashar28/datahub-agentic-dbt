@@ -11,3 +11,8 @@ node_modules/
 dist/
 .vite/
 *.log
+
+# local tooling / virtualenvs
+.venv/
+backend/.venv/
+.claude/

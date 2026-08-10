@@ -13,9 +13,70 @@ class MockProvider(LLMProvider):
     Supports all datasets (orders, customers, products, payments, stores, monthly_revenue, customer_lifetime_value)
     and custom user business prompts.
     """
+    # Dataset tokens the response bodies below switch on, longest-first so that
+    # `customer_lifetime_value` is never shadowed by `customers`.
+    DATASET_KEYS = (
+        "customer_lifetime_value",
+        "monthly_revenue",
+        "transactions",
+        "customers",
+        "products",
+        "payments",
+        "stores",
+        "orders",
+    )
+
+    MODEL_TO_SUBJECT = {
+        "fct_customer_orders": "orders customers join",
+        "dim_products": "products",
+        "fct_payments": "payments",
+        "dim_stores": "stores",
+        "fct_customer_lifetime_value": "customer_lifetime_value",
+        "dim_customers": "customers",
+        "monthly_revenue": "monthly_revenue",
+        "fct_orders": "orders",
+    }
+
+    def _reasoning_subject(self, prompt: str) -> str:
+        """Resolve which dataset a reasoning prompt is about, from its `Table Name:` header."""
+        match = re.search(r"table name:\s*([^\n]+)", prompt, re.IGNORECASE)
+        table = (match.group(1) if match else "").strip().lower()
+
+        # A merged multi-dataset request carries customer attributes on an orders grain.
+        if "order" in table and "first_name" in prompt.lower():
+            return "orders customers join"
+
+        for key in self.DATASET_KEYS:
+            if key in table:
+                return key
+        return "orders"
+
+    def _sql_subject(self, prompt: str) -> str:
+        """Resolve which dataset a SQL prompt is about, from its `Target model:` header."""
+        match = re.search(r"target model:\s*([A-Za-z0-9_]+)", prompt, re.IGNORECASE)
+        model = (match.group(1) if match else "").strip().lower()
+
+        if model in self.MODEL_TO_SUBJECT:
+            return self.MODEL_TO_SUBJECT[model]
+        for key in self.DATASET_KEYS:
+            if key in model:
+                return key
+        return "orders"
+
     def generate(self, prompt: str, system_prompt: Optional[str] = None) -> str:
         prompt_lower = prompt.lower()
-        
+
+        # Route on the exact signature each agent emits. Loose keyword matching is unsafe
+        # here because the SQL prompt embeds the full reasoning object, so tokens like
+        # "join" and "reasoning plan" appear inside prompts they do not describe.
+        is_reasoning = "structured json reasoning object" in prompt_lower
+        is_sql = "output only clean executable sql" in prompt_lower
+
+        if is_reasoning:
+            prompt_lower = "structured reasoning " + self._reasoning_subject(prompt)
+        elif is_sql:
+            prompt_lower = "generate sql " + self._sql_subject(prompt)
+
         # 1. Reasoning Prompt
         if "metadata_reasoning" in prompt_lower or "structured reasoning" in prompt_lower or "reason about" in prompt_lower:
             if "join" in prompt_lower or "secondary" in prompt_lower or ("orders" in prompt_lower and "customers" in prompt_lower):

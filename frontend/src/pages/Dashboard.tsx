@@ -10,7 +10,9 @@ import { ArtifactsViewer } from '../components/ArtifactsViewer';
 import { ValidationStatusCard } from '../components/ValidationStatusCard';
 import { DataHubWritebackModal } from '../components/DataHubWritebackModal';
 import { AIChatAssistant } from '../components/AIChatAssistant';
-import { Sparkles, X, FileText, Layers, ShieldCheck, Brain, FileCode, MessageSquare } from 'lucide-react';
+import { StudioTabs, StudioTab } from '../components/StudioTabs';
+import { AgentPipelineStepper } from '../components/AgentPipelineStepper';
+import { X, FileText, Layers, Brain } from 'lucide-react';
 
 export const Dashboard: React.FC = () => {
   const [datasets, setDatasets] = useState<{ urn: string; name: string; platform: string; description?: string; domain?: string }[]>([]);
@@ -26,7 +28,7 @@ export const Dashboard: React.FC = () => {
   const [publishedResult, setPublishedResult] = useState<WritebackResult | null>(null);
   const [demoMode, setDemoMode] = useState(true);
   
-  const [activeTab, setActiveTab] = useState<'context' | 'reasoning' | 'artifacts' | 'chat'>('context');
+  const [activeTab, setActiveTab] = useState<StudioTab>('context');
 
   const [showExamplesModal, setShowExamplesModal] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
@@ -68,7 +70,9 @@ export const Dashboard: React.FC = () => {
     try {
       const result = await generateDbtModel(selectedUrn, secondaryUrn, customInstructions);
       setArtifacts(result);
-      setActiveTab('artifacts');
+      // Land on the reasoning plan: the agent's justification is the point, and the
+      // generated artifacts are one click away once the viewer has seen the "why".
+      setActiveTab('reasoning');
     } catch (err: any) {
       setErrorMsg(err.message || 'Generation failed');
     } finally {
@@ -115,75 +119,13 @@ export const Dashboard: React.FC = () => {
         />
 
         {/* Master Studio Tab Navigation */}
-        <div className="flex items-center justify-between border-b border-slate-200 pb-1">
-          <div className="flex space-x-2 flex-wrap gap-y-2">
-            <button
-              onClick={() => setActiveTab('context')}
-              className={`flex items-center space-x-2 px-5 py-3 text-xs font-extrabold rounded-2xl transition border ${
-                activeTab === 'context'
-                  ? 'bg-slate-900 text-white border-slate-900 shadow-md font-mono'
-                  : 'bg-white text-slate-700 border-slate-200 hover:text-slate-900 hover:border-slate-300'
-              }`}
-            >
-              <ShieldCheck className="w-4 h-4 text-sky-400" />
-              <span>1. DataHub Context & Quality Score</span>
-              {metadata?.quality_score && (
-                <span className="ml-1 bg-slate-800 text-sky-400 px-2 py-0.5 rounded-full font-mono text-[10px]">
-                  {metadata.quality_score.overall_score}/100
-                </span>
-              )}
-            </button>
-
-            <button
-              onClick={() => setActiveTab('reasoning')}
-              className={`flex items-center space-x-2 px-5 py-3 text-xs font-extrabold rounded-2xl transition border ${
-                activeTab === 'reasoning'
-                  ? 'bg-slate-900 text-white border-slate-900 shadow-md font-mono'
-                  : 'bg-white text-slate-700 border-slate-200 hover:text-slate-900 hover:border-slate-300'
-              }`}
-            >
-              <Brain className="w-4 h-4 text-indigo-400" />
-              <span>2. Agent Reasoning & Logic</span>
-              {artifacts && (
-                <span className="ml-1 bg-emerald-900 text-emerald-300 px-2 py-0.5 rounded-full font-mono text-[10px]">
-                  Ready
-                </span>
-              )}
-            </button>
-
-            <button
-              onClick={() => setActiveTab('artifacts')}
-              className={`flex items-center space-x-2 px-5 py-3 text-xs font-extrabold rounded-2xl transition border ${
-                activeTab === 'artifacts'
-                  ? 'bg-slate-900 text-white border-slate-900 shadow-md font-mono'
-                  : 'bg-white text-slate-700 border-slate-200 hover:text-slate-900 hover:border-slate-300'
-              }`}
-            >
-              <FileCode className="w-4 h-4 text-amber-400" />
-              <span>3. Generated dbt Assets & Publish</span>
-              {artifacts && (
-                <span className="ml-1 bg-amber-900 text-amber-300 px-2 py-0.5 rounded-full font-mono text-[10px]">
-                  ✓ Verified
-                </span>
-              )}
-            </button>
-
-            <button
-              onClick={() => setActiveTab('chat')}
-              className={`flex items-center space-x-2 px-5 py-3 text-xs font-extrabold rounded-2xl transition border ${
-                activeTab === 'chat'
-                  ? 'bg-blue-600 text-white border-blue-600 shadow-md font-mono'
-                  : 'bg-white text-slate-700 border-slate-200 hover:text-slate-900 hover:border-slate-300'
-              }`}
-            >
-              <MessageSquare className="w-4 h-4 text-blue-300" />
-              <span>4. 💬 AI Data Assistant Chat</span>
-              <span className="ml-1 bg-blue-500/30 text-blue-200 px-2 py-0.5 rounded-full font-mono text-[10px]">
-                Interactive
-              </span>
-            </button>
-          </div>
-        </div>
+        <StudioTabs
+          activeTab={activeTab}
+          onChange={setActiveTab}
+          qualityScore={metadata?.quality_score?.overall_score ?? null}
+          hasArtifacts={!!artifacts}
+          validationPassed={artifacts?.validation.is_valid}
+        />
 
         {/* Tab 1: DataHub Metadata Context & Quality Score */}
         {activeTab === 'context' && metadata && (
@@ -210,17 +152,7 @@ export const Dashboard: React.FC = () => {
               </div>
             )}
 
-            {isGenerating && (
-              <div className="bg-white border border-slate-200 rounded-3xl p-12 text-center space-y-4 shadow-md">
-                <Sparkles className="w-10 h-10 text-sky-600 animate-spin mx-auto" />
-                <h3 className="text-sm font-extrabold text-slate-900 uppercase tracking-wider">
-                  AI Agent Formulating Reasoning Plan
-                </h3>
-                <p className="text-xs text-slate-600 font-medium max-w-md mx-auto leading-relaxed">
-                  Analyzing schema types → Deriving CTE transformations → Mapping dbt quality tests → Recording explicit engineering assumptions
-                </p>
-              </div>
-            )}
+            <AgentPipelineStepper isRunning={isGenerating} />
 
             {artifacts && <ReasoningCard reasoning={artifacts.reasoning} />}
           </div>
@@ -239,17 +171,7 @@ export const Dashboard: React.FC = () => {
               </div>
             )}
 
-            {isGenerating && (
-              <div className="bg-white border border-slate-200 rounded-3xl p-12 text-center space-y-4 shadow-md">
-                <Sparkles className="w-10 h-10 text-sky-600 animate-spin mx-auto" />
-                <h3 className="text-sm font-extrabold text-slate-900 uppercase tracking-wider">
-                  Generating & Validating dbt Artifacts
-                </h3>
-                <p className="text-xs text-slate-600 font-medium max-w-md mx-auto leading-relaxed">
-                  Writing executable SQL model → Formatting schema.yml → Running <span className="font-mono text-slate-900 font-bold">sqlglot</span> AST hallucination checks
-                </p>
-              </div>
-            )}
+            <AgentPipelineStepper isRunning={isGenerating} />
 
             {artifacts && (
               <>
