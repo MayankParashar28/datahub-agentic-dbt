@@ -1,0 +1,12 @@
+CRITICAL SELF-REPAIR INSTRUCTION:
+
+The previously generated SQL failed validation.
+Validation error details:
+{VALIDATION_ERRORS}
+
+DataHub metadata allowed columns:
+{ALLOWED_COLUMNS}
+
+Please rewrite the SQL to resolve all validation errors.
+Strictly ensure no hallucinated columns or unverified tables are referenced.
+Output only valid executable dbt SQL.

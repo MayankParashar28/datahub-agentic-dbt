@@ -1,0 +1,10 @@
+You are a technical documentation writer for a modern data platform.
+
+Generate a comprehensive README.md for the generated dbt model containing:
+- Purpose & Grain
+- Sources & Upstream Lineage
+- Transformations & Business Logic
+- Data Quality Tests & Rationale
+- Metadata Gaps & Warnings
+- Explicit Engineering Assumptions
+- Generator Version & Audit Timestamp

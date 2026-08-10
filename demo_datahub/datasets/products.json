@@ -1,0 +1,103 @@
+{
+  "urn": "urn:li:dataset:fiction-retail.products",
+  "name": "products",
+  "platform": "postgres",
+  "database": "fiction_retail",
+  "schema": "public",
+  "description": "Product catalog reference metadata table containing item categories, brands, list prices, and costs.",
+  "domain": "Catalog",
+  "owners": ["retail-data-team"],
+  "tags": ["commerce", "reference-data"],
+  "columns": [
+    {
+      "name": "product_id",
+      "data_type": "BIGINT",
+      "description": "Unique product SKU identifier.",
+      "nullable": false,
+      "is_primary_key": true,
+      "tags": ["identifier", "commerce"],
+      "glossary_terms": ["Product"]
+    },
+    {
+      "name": "product_name",
+      "data_type": "VARCHAR",
+      "description": "Commercial product display title.",
+      "nullable": false,
+      "is_primary_key": false,
+      "tags": ["commerce"],
+      "glossary_terms": ["Product"]
+    },
+    {
+      "name": "category",
+      "data_type": "VARCHAR",
+      "description": "Top-level merchandise category (e.g., Electronics, Apparel).",
+      "nullable": false,
+      "is_primary_key": false,
+      "tags": ["commerce"],
+      "glossary_terms": ["Product"]
+    },
+    {
+      "name": "subcategory",
+      "data_type": "VARCHAR",
+      "description": "Detailed merchandise subcategory classification.",
+      "nullable": true,
+      "is_primary_key": false,
+      "tags": ["commerce"],
+      "glossary_terms": []
+    },
+    {
+      "name": "brand",
+      "data_type": "VARCHAR",
+      "description": "Manufacturer or brand label name.",
+      "nullable": true,
+      "is_primary_key": false,
+      "tags": ["commerce"],
+      "glossary_terms": ["Product"]
+    },
+    {
+      "name": "unit_cost",
+      "data_type": "DECIMAL",
+      "description": "Wholesale procurement unit cost paid to supplier.",
+      "nullable": false,
+      "is_primary_key": false,
+      "tags": ["financial"],
+      "glossary_terms": ["Product"]
+    },
+    {
+      "name": "list_price",
+      "data_type": "DECIMAL",
+      "description": "Standard suggested retail listing price.",
+      "nullable": false,
+      "is_primary_key": false,
+      "tags": ["financial", "commerce"],
+      "glossary_terms": ["Product"]
+    },
+    {
+      "name": "supplier_id",
+      "data_type": "INTEGER",
+      "description": "",
+      "nullable": false,
+      "is_primary_key": false,
+      "tags": ["identifier"],
+      "glossary_terms": []
+    },
+    {
+      "name": "product_status",
+      "data_type": "VARCHAR",
+      "description": "Catalog availability status (ACTIVE, DISCONTINUED, OUT_OF_STOCK).",
+      "nullable": false,
+      "is_primary_key": false,
+      "tags": ["commerce"],
+      "glossary_terms": ["Product"]
+    },
+    {
+      "name": "created_at",
+      "data_type": "TIMESTAMP",
+      "description": "System catalog record creation date.",
+      "nullable": false,
+      "is_primary_key": false,
+      "tags": [],
+      "glossary_terms": []
+    }
+  ]
+}

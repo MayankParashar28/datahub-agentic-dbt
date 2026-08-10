@@ -1,0 +1,59 @@
+{
+  "target_model": "monthly_revenue",
+  "grain": "one row per month and payment method channel",
+  "sources": [
+    "finance.transactions"
+  ],
+  "joins": [],
+  "transformations": [
+    {
+      "expression": "date_trunc('month', transaction_timestamp)",
+      "output": "revenue_month",
+      "reason": "Truncate timestamp to monthly cohort grain"
+    },
+    {
+      "expression": "sum(gross_amount - coalesce(discount_amount, 0))",
+      "output": "net_revenue",
+      "reason": "Calculate net revenue after deducting promotional discount"
+    }
+  ],
+  "tests": [
+    {
+      "column": "revenue_month",
+      "test": "not_null",
+      "reason": "Cohort month cannot be null"
+    },
+    {
+      "column": "net_revenue",
+      "test": "not_null",
+      "reason": "Calculated net revenue metric"
+    }
+  ],
+  "metadata_gaps": [
+    {
+      "gap_type": "UNDEFINED_CURRENCY",
+      "column": "gross_amount",
+      "description": "Monetary currency unit is undefined in DataHub metadata",
+      "action_taken": "No currency conversion applied; preserved native ledger amounts",
+      "confidence": "High"
+    }
+  ],
+  "assumptions": [
+    "Assuming gross_amount and discount_amount are in homogeneous local currency (USD)",
+    "Assuming transaction_timestamp is in UTC time zone"
+  ],
+  "explainability": [
+    {
+      "decision": "Calculate net revenue as gross_amount - discount_amount",
+      "evidence": "DataHub column definitions for gross_amount and discount_amount",
+      "confidence": "High",
+      "section": "Transformation"
+    },
+    {
+      "decision": "Do not perform currency conversion",
+      "evidence": "No currency metadata or exchange rate table defined in DataHub",
+      "confidence": "High",
+      "section": "Gap"
+    }
+  ]
+}

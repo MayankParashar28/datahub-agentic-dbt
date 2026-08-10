@@ -1,0 +1,112 @@
+{
+  "urn": "urn:li:dataset:fiction-retail.orders",
+  "name": "orders",
+  "platform": "postgres",
+  "database": "fiction_retail",
+  "schema": "public",
+  "description": "Core transactional order fact table capturing item purchases, pricing, discount, and status.",
+  "domain": "E-Commerce",
+  "owners": ["retail-data-team", "analytics-team"],
+  "tags": ["transactional", "commerce", "financial"],
+  "columns": [
+    {
+      "name": "order_id",
+      "data_type": "BIGINT",
+      "description": "Unique order transaction identifier.",
+      "nullable": false,
+      "is_primary_key": true,
+      "tags": ["identifier", "transactional"],
+      "glossary_terms": ["Order"]
+    },
+    {
+      "name": "customer_id",
+      "data_type": "BIGINT",
+      "description": "Foreign key reference targeting customers dataset.",
+      "nullable": false,
+      "is_primary_key": false,
+      "tags": ["identifier", "customer-data"],
+      "glossary_terms": ["Customer"]
+    },
+    {
+      "name": "product_id",
+      "data_type": "BIGINT",
+      "description": "Foreign key reference targeting products dataset.",
+      "nullable": false,
+      "is_primary_key": false,
+      "tags": ["identifier", "commerce"],
+      "glossary_terms": ["Product"]
+    },
+    {
+      "name": "store_id",
+      "data_type": "INTEGER",
+      "description": "Foreign key reference targeting stores dataset.",
+      "nullable": false,
+      "is_primary_key": false,
+      "tags": ["identifier", "reference-data"],
+      "glossary_terms": ["Store"]
+    },
+    {
+      "name": "order_date",
+      "data_type": "TIMESTAMP",
+      "description": "Timestamp when transaction order was submitted.",
+      "nullable": false,
+      "is_primary_key": false,
+      "tags": ["transactional"],
+      "glossary_terms": ["Order"]
+    },
+    {
+      "name": "quantity",
+      "data_type": "INTEGER",
+      "description": "Number of product item units ordered.",
+      "nullable": false,
+      "is_primary_key": false,
+      "tags": ["commerce"],
+      "glossary_terms": ["Order"]
+    },
+    {
+      "name": "unit_price",
+      "data_type": "DECIMAL",
+      "description": "Unit price of item at time of order purchase.",
+      "nullable": false,
+      "is_primary_key": false,
+      "tags": ["financial", "commerce"],
+      "glossary_terms": ["Revenue", "Gross Revenue"]
+    },
+    {
+      "name": "discount_amount",
+      "data_type": "DECIMAL",
+      "description": "Promotional or coupon discount amount deducted from unit price.",
+      "nullable": false,
+      "is_primary_key": false,
+      "tags": ["financial"],
+      "glossary_terms": ["Net Revenue"]
+    },
+    {
+      "name": "status",
+      "data_type": "VARCHAR",
+      "description": "Current order processing state (COMPLETED, PENDING, CANCELLED, REFUNDED).",
+      "nullable": false,
+      "is_primary_key": false,
+      "tags": ["transactional"],
+      "glossary_terms": ["Order Status"]
+    },
+    {
+      "name": "payment_id",
+      "data_type": "BIGINT",
+      "description": "Foreign key reference targeting payments dataset.",
+      "nullable": true,
+      "is_primary_key": false,
+      "tags": ["identifier", "financial"],
+      "glossary_terms": ["Payment Status"]
+    },
+    {
+      "name": "created_at",
+      "data_type": "TIMESTAMP",
+      "description": "Database system creation timestamp.",
+      "nullable": false,
+      "is_primary_key": false,
+      "tags": [],
+      "glossary_terms": []
+    }
+  ]
+}

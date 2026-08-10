@@ -1,0 +1,93 @@
+{
+  "terms": [
+    {
+      "term": "Customer",
+      "definition": "An individual or legal entity registered to purchase goods and services from the fiction-retail platform.",
+      "related_columns": [
+        "customers.customer_id",
+        "orders.customer_id",
+        "customer_lifetime_value.customer_id"
+      ]
+    },
+    {
+      "term": "Order",
+      "definition": "A commercial agreement transaction representing an item purchase placed by a customer.",
+      "related_columns": [
+        "orders.order_id",
+        "payments.order_id",
+        "monthly_revenue.total_orders",
+        "customer_lifetime_value.total_orders"
+      ]
+    },
+    {
+      "term": "Product",
+      "definition": "A commercial merchandise item SKU listed in the retail catalog for purchase.",
+      "related_columns": [
+        "products.product_id",
+        "orders.product_id",
+        "products.product_name"
+      ]
+    },
+    {
+      "term": "Revenue",
+      "definition": "Monetary value generated from customer purchases before applicable deductions.",
+      "related_columns": [
+        "orders.unit_price",
+        "monthly_revenue.gross_revenue",
+        "monthly_revenue.net_revenue",
+        "customer_lifetime_value.total_spend"
+      ]
+    },
+    {
+      "term": "Net Revenue",
+      "definition": "Total gross revenue minus applicable promotional discounts, refunds, and coupons.",
+      "related_columns": [
+        "orders.discount_amount",
+        "monthly_revenue.net_revenue",
+        "monthly_revenue.discount_amount"
+      ]
+    },
+    {
+      "term": "Gross Revenue",
+      "definition": "Total undiscounted monetary value of ordered quantity multiplied by purchase unit price.",
+      "related_columns": [
+        "orders.unit_price",
+        "monthly_revenue.gross_revenue"
+      ]
+    },
+    {
+      "term": "Customer Lifetime Value",
+      "definition": "Cumulative net monetary value realized or predicted from a customer across their entire relationship lifespan.",
+      "related_columns": [
+        "customer_lifetime_value.total_spend",
+        "customer_lifetime_value.average_order_value",
+        "customer_lifetime_value.lifetime_value"
+      ]
+    },
+    {
+      "term": "Order Status",
+      "definition": "The current fulfillment and processing lifecycle state of a customer transaction order.",
+      "related_columns": [
+        "orders.status"
+      ]
+    },
+    {
+      "term": "Payment Status",
+      "definition": "Financial settlement processing state of a payment tender charge transaction.",
+      "related_columns": [
+        "payments.payment_status",
+        "payments.payment_id",
+        "orders.payment_id"
+      ]
+    },
+    {
+      "term": "Store",
+      "definition": "A physical or digital retail outlet location where customer order fulfillment originates.",
+      "related_columns": [
+        "stores.store_id",
+        "orders.store_id",
+        "monthly_revenue.store_id"
+      ]
+    }
+  ]
+}

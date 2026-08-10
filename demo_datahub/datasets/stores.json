@@ -1,0 +1,94 @@
+{
+  "urn": "urn:li:dataset:fiction-retail.stores",
+  "name": "stores",
+  "platform": "postgres",
+  "database": "fiction_retail",
+  "schema": "public",
+  "description": "Retail store outlet location directory and operational status.",
+  "domain": "",
+  "owners": ["retail-data-team"],
+  "tags": ["reference-data"],
+  "columns": [
+    {
+      "name": "store_id",
+      "data_type": "INTEGER",
+      "description": "Unique retail store outlet identifier.",
+      "nullable": false,
+      "is_primary_key": true,
+      "tags": ["identifier", "reference-data"],
+      "glossary_terms": ["Store"]
+    },
+    {
+      "name": "store_name",
+      "data_type": "VARCHAR",
+      "description": "Commercial store location name.",
+      "nullable": false,
+      "is_primary_key": false,
+      "tags": ["reference-data"],
+      "glossary_terms": ["Store"]
+    },
+    {
+      "name": "city",
+      "data_type": "VARCHAR",
+      "description": "City where store is located.",
+      "nullable": false,
+      "is_primary_key": false,
+      "tags": ["reference-data"],
+      "glossary_terms": ["Store"]
+    },
+    {
+      "name": "state",
+      "data_type": "VARCHAR",
+      "description": "State or province code.",
+      "nullable": false,
+      "is_primary_key": false,
+      "tags": ["reference-data"],
+      "glossary_terms": ["Store"]
+    },
+    {
+      "name": "country",
+      "data_type": "VARCHAR",
+      "description": "ISO 2-letter country code.",
+      "nullable": false,
+      "is_primary_key": false,
+      "tags": ["reference-data"],
+      "glossary_terms": ["Store"]
+    },
+    {
+      "name": "region",
+      "data_type": "VARCHAR",
+      "description": "Geographic sales territory region (NORTH_AMERICA, EUROPE, APAC).",
+      "nullable": false,
+      "is_primary_key": false,
+      "tags": ["reference-data"],
+      "glossary_terms": ["Store"]
+    },
+    {
+      "name": "store_type",
+      "data_type": "VARCHAR",
+      "description": "Store format (FLAGSHIP, OUTLET, ONLINE_FULFILLMENT).",
+      "nullable": false,
+      "is_primary_key": false,
+      "tags": ["reference-data"],
+      "glossary_terms": ["Store"]
+    },
+    {
+      "name": "opened_date",
+      "data_type": "DATE",
+      "description": "Date store location opened.",
+      "nullable": false,
+      "is_primary_key": false,
+      "tags": [],
+      "glossary_terms": []
+    },
+    {
+      "name": "store_status",
+      "data_type": "VARCHAR",
+      "description": "Current operating status (OPEN, CLOSED, TEMPORARILY_CLOSED).",
+      "nullable": false,
+      "is_primary_key": false,
+      "tags": ["reference-data"],
+      "glossary_terms": ["Store"]
+    }
+  ]
+}

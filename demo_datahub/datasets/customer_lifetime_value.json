@@ -1,0 +1,76 @@
+{
+  "urn": "urn:li:dataset:fiction-retail.customer_lifetime_value",
+  "name": "customer_lifetime_value",
+  "platform": "postgres",
+  "database": "fiction_retail",
+  "schema": "analytics",
+  "description": "Downstream customer analytical dataset computing order history metrics, total spend, and lifetime value.",
+  "domain": "Customer Analytics",
+  "owners": ["customer-analytics-team", "analytics-team"],
+  "tags": ["analytics", "customer-data", "derived"],
+  "columns": [
+    {
+      "name": "customer_id",
+      "data_type": "BIGINT",
+      "description": "Unique customer account identifier.",
+      "nullable": false,
+      "is_primary_key": true,
+      "tags": ["identifier", "customer-data"],
+      "glossary_terms": ["Customer"]
+    },
+    {
+      "name": "first_order_date",
+      "data_type": "TIMESTAMP",
+      "description": "Timestamp of customer's initial order purchase.",
+      "nullable": true,
+      "is_primary_key": false,
+      "tags": ["analytics"],
+      "glossary_terms": ["Order"]
+    },
+    {
+      "name": "last_order_date",
+      "data_type": "TIMESTAMP",
+      "description": "Timestamp of customer's most recent order purchase.",
+      "nullable": true,
+      "is_primary_key": false,
+      "tags": ["analytics"],
+      "glossary_terms": ["Order"]
+    },
+    {
+      "name": "total_orders",
+      "data_type": "INTEGER",
+      "description": "Cumulative count of completed orders by customer.",
+      "nullable": false,
+      "is_primary_key": false,
+      "tags": ["analytics"],
+      "glossary_terms": ["Order"]
+    },
+    {
+      "name": "total_spend",
+      "data_type": "DECIMAL",
+      "description": "Cumulative net monetary spend across all orders.",
+      "nullable": false,
+      "is_primary_key": false,
+      "tags": ["financial", "analytics"],
+      "glossary_terms": ["Customer Lifetime Value", "Revenue"]
+    },
+    {
+      "name": "average_order_value",
+      "data_type": "DECIMAL",
+      "description": "Total spend divided by total completed orders.",
+      "nullable": true,
+      "is_primary_key": false,
+      "tags": ["financial", "analytics"],
+      "glossary_terms": ["Customer Lifetime Value"]
+    },
+    {
+      "name": "lifetime_value",
+      "data_type": "DECIMAL",
+      "description": "Modeled predictive customer lifetime financial value.",
+      "nullable": false,
+      "is_primary_key": false,
+      "tags": ["financial", "analytics"],
+      "glossary_terms": ["Customer Lifetime Value"]
+    }
+  ]
+}

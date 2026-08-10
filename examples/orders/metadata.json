@@ -1,0 +1,77 @@
+{
+  "urn": "urn:li:dataset:(urn:li:dataPlatform:snowflake,retail.orders,PROD)",
+  "name": "retail.orders",
+  "platform": "snowflake",
+  "description": "Raw transaction orders table containing customer purchase details, quantities, unit pricing, and status.",
+  "columns": [
+    {
+      "name": "order_id",
+      "data_type": "NUMBER",
+      "description": "Unique identifier for each transaction order",
+      "tags": ["Primary_Key"],
+      "glossary_terms": ["Order_ID"],
+      "is_primary_key": true,
+      "is_foreign_key": false
+    },
+    {
+      "name": "customer_id",
+      "data_type": "NUMBER",
+      "description": "Unique reference to purchasing customer",
+      "tags": ["Foreign_Key"],
+      "glossary_terms": ["Customer_ID"],
+      "is_primary_key": false,
+      "is_foreign_key": true
+    },
+    {
+      "name": "order_date",
+      "data_type": "TIMESTAMP",
+      "description": "Timestamp when order was placed",
+      "tags": ["Event_Time"],
+      "glossary_terms": ["Order_Timestamp"]
+    },
+    {
+      "name": "quantity",
+      "data_type": "NUMBER",
+      "description": "Number of item units purchased",
+      "tags": ["Metric"]
+    },
+    {
+      "name": "unit_price",
+      "data_type": "DECIMAL(12,2)",
+      "description": "Unit price of item purchased in cents/local value",
+      "tags": ["Monetary"]
+    },
+    {
+      "name": "status",
+      "data_type": "VARCHAR(20)",
+      "description": null,
+      "tags": ["Status_Flag"]
+    },
+    {
+      "name": "shipping_address",
+      "data_type": "VARCHAR(255)",
+      "description": "Customer delivery street address",
+      "tags": ["PII"]
+    }
+  ],
+  "upstream": [
+    {
+      "urn": "urn:li:dataset:(urn:li:dataPlatform:postgres,raw_pos.transactions,PROD)",
+      "name": "raw_pos.transactions",
+      "platform": "postgres",
+      "relationship_type": "UPSTREAM"
+    }
+  ],
+  "downstream": [
+    {
+      "urn": "urn:li:dataset:(urn:li:dataPlatform:snowflake,analytics.fct_orders,PROD)",
+      "name": "analytics.fct_orders",
+      "platform": "snowflake",
+      "relationship_type": "DOWNSTREAM"
+    }
+  ],
+  "glossary_terms": ["Order_Management", "Financial_Transaction"],
+  "tags": ["Tier-1", "PII"],
+  "owners": ["alex.dataengineer@company.com"],
+  "domain": "E-Commerce"
+}

@@ -1,0 +1,64 @@
+{
+  "target_model": "dim_customers",
+  "grain": "one row per customer account",
+  "sources": [
+    "retail.customers"
+  ],
+  "joins": [],
+  "transformations": [
+    {
+      "expression": "concat(first_name, ' ', last_name)",
+      "output": "full_name",
+      "reason": "Derived full customer name from first_name and last_name"
+    },
+    {
+      "expression": "lower(email)",
+      "output": "clean_email",
+      "reason": "Standardized email address format to lower-case"
+    }
+  ],
+  "tests": [
+    {
+      "column": "customer_id",
+      "test": "unique",
+      "reason": "Primary key identifier"
+    },
+    {
+      "column": "customer_id",
+      "test": "not_null",
+      "reason": "Customer ID cannot be null"
+    },
+    {
+      "column": "clean_email",
+      "test": "not_null",
+      "reason": "Primary contact email required"
+    }
+  ],
+  "metadata_gaps": [
+    {
+      "gap_type": "MISSING_DESCRIPTION",
+      "column": "country_code",
+      "description": "Column country_code lacks DataHub documentation description",
+      "action_taken": "Preserved raw ISO country code without transformation",
+      "confidence": "High"
+    }
+  ],
+  "assumptions": [
+    "Assuming country_code follows standard ISO-3166 2-letter country code format",
+    "Assuming ACTIVE account_status represents active customer relationship"
+  ],
+  "explainability": [
+    {
+      "decision": "Add unique test to customer_id",
+      "evidence": "DataHub column metadata marks customer_id as Primary Key",
+      "confidence": "High",
+      "section": "Test"
+    },
+    {
+      "decision": "Preserve country_code untransformed",
+      "evidence": "Country code description is missing in DataHub metadata context",
+      "confidence": "High",
+      "section": "Gap"
+    }
+  ]
+}

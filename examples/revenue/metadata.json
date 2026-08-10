@@ -1,0 +1,72 @@
+{
+  "urn": "urn:li:dataset:(urn:li:dataPlatform:snowflake,finance.transactions,PROD)",
+  "name": "finance.transactions",
+  "platform": "snowflake",
+  "description": "Ledger transaction records for financial reporting and monthly revenue aggregation.",
+  "columns": [
+    {
+      "name": "transaction_id",
+      "data_type": "VARCHAR(64)",
+      "description": "Unique ledger item transaction UUID",
+      "tags": ["Primary_Key"],
+      "glossary_terms": ["Transaction_ID"],
+      "is_primary_key": true
+    },
+    {
+      "name": "account_id",
+      "data_type": "NUMBER",
+      "description": "Chart of accounts reference ID",
+      "tags": ["Foreign_Key"]
+    },
+    {
+      "name": "transaction_timestamp",
+      "data_type": "TIMESTAMP",
+      "description": "Execution timestamp of transaction",
+      "tags": ["Event_Time"]
+    },
+    {
+      "name": "gross_amount",
+      "data_type": "DECIMAL(14,2)",
+      "description": "Gross total monetary transaction amount",
+      "tags": ["Monetary"]
+    },
+    {
+      "name": "tax_amount",
+      "data_type": "DECIMAL(14,2)",
+      "description": "Tax portion of transaction",
+      "tags": ["Monetary"]
+    },
+    {
+      "name": "discount_amount",
+      "data_type": "DECIMAL(14,2)",
+      "description": null,
+      "tags": ["Monetary"]
+    },
+    {
+      "name": "payment_method",
+      "data_type": "VARCHAR(30)",
+      "description": "Payment channel (CREDIT_CARD, WIRE, PAYPAL)",
+      "tags": []
+    }
+  ],
+  "upstream": [
+    {
+      "urn": "urn:li:dataset:(urn:li:dataPlatform:kafka,payments.events,PROD)",
+      "name": "payments.events",
+      "platform": "kafka",
+      "relationship_type": "UPSTREAM"
+    }
+  ],
+  "downstream": [
+    {
+      "urn": "urn:li:dataset:(urn:li:dataPlatform:snowflake,analytics.monthly_revenue,PROD)",
+      "name": "analytics.monthly_revenue",
+      "platform": "snowflake",
+      "relationship_type": "DOWNSTREAM"
+    }
+  ],
+  "glossary_terms": ["Revenue_Recognition", "General_Ledger"],
+  "tags": ["SOX_Audit", "Finance_Core"],
+  "owners": ["david.finance@company.com"],
+  "domain": "Finance & Accounting"
+}

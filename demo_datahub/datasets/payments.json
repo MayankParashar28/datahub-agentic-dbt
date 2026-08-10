@@ -1,0 +1,76 @@
+{
+  "urn": "urn:li:dataset:fiction-retail.payments",
+  "name": "payments",
+  "platform": "postgres",
+  "database": "fiction_retail",
+  "schema": "public",
+  "description": "Financial payment transaction records capturing payment methods, gateway references, and status.",
+  "domain": "Finance",
+  "owners": ["finance-analytics-team"],
+  "tags": ["financial", "transactional"],
+  "columns": [
+    {
+      "name": "payment_id",
+      "data_type": "BIGINT",
+      "description": "Unique payment record transaction identifier.",
+      "nullable": false,
+      "is_primary_key": true,
+      "tags": ["identifier", "financial"],
+      "glossary_terms": ["Payment Status"]
+    },
+    {
+      "name": "order_id",
+      "data_type": "BIGINT",
+      "description": "Foreign key reference targeting orders dataset.",
+      "nullable": false,
+      "is_primary_key": false,
+      "tags": ["identifier", "transactional"],
+      "glossary_terms": ["Order"]
+    },
+    {
+      "name": "payment_method",
+      "data_type": "VARCHAR",
+      "description": "Payment tender type (CREDIT_CARD, PAYPAL, APPLE_PAY, BANK_TRANSFER).",
+      "nullable": false,
+      "is_primary_key": false,
+      "tags": ["financial"],
+      "glossary_terms": ["Payment Status"]
+    },
+    {
+      "name": "payment_status",
+      "data_type": "VARCHAR",
+      "description": "Payment processing state (SETTLED, PENDING, FAILED, REFUNDED).",
+      "nullable": false,
+      "is_primary_key": false,
+      "tags": ["financial"],
+      "glossary_terms": ["Payment Status"]
+    },
+    {
+      "name": "amount",
+      "data_type": "DECIMAL",
+      "description": "Total monetary amount charged to payment method.",
+      "nullable": false,
+      "is_primary_key": false,
+      "tags": ["financial"],
+      "glossary_terms": ["Revenue"]
+    },
+    {
+      "name": "payment_date",
+      "data_type": "TIMESTAMP",
+      "description": "Timestamp when payment processing occurred.",
+      "nullable": false,
+      "is_primary_key": false,
+      "tags": ["financial"],
+      "glossary_terms": []
+    },
+    {
+      "name": "transaction_reference",
+      "data_type": "VARCHAR",
+      "description": "External payment gateway transaction reference code.",
+      "nullable": false,
+      "is_primary_key": false,
+      "tags": ["financial", "identifier"],
+      "glossary_terms": []
+    }
+  ]
+}

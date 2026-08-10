@@ -1,0 +1,44 @@
+{
+  "platform": "fiction-retail",
+  "description": "Demo retail metadata environment for DataHub dbt Forge",
+  "dataset_count": 7,
+  "domains": [
+    "Customer Insights",
+    "E-Commerce",
+    "Catalog",
+    "Finance",
+    "Operations",
+    "Customer Analytics"
+  ],
+  "metadata_quality": {
+    "score": 78,
+    "method": "Deterministic scoring starting from 100 base score: Deduct 5 points per undefined monetary currency, 4 points per missing column description/glossary, 4 points per missing dataset domain, and 4 points per unformatted PII field."
+  },
+  "quality_issues": [
+    {
+      "dataset": "orders",
+      "field": "unit_price",
+      "issue": "Currency ISO code is not defined"
+    },
+    {
+      "dataset": "orders",
+      "field": "discount_amount",
+      "issue": "Currency ISO code is not defined"
+    },
+    {
+      "dataset": "customers",
+      "field": "phone",
+      "issue": "Phone number format pattern definition is missing"
+    },
+    {
+      "dataset": "products",
+      "field": "supplier_id",
+      "issue": "Glossary term and description are missing"
+    },
+    {
+      "dataset": "stores",
+      "field": "domain",
+      "issue": "Business domain classification is missing"
+    }
+  ]
+}

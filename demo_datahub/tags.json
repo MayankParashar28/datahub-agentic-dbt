@@ -1,0 +1,40 @@
+{
+  "tags": [
+    {
+      "name": "identifier",
+      "description": "Primary key or foreign key dataset join field."
+    },
+    {
+      "name": "pii",
+      "description": "Personally Identifiable Information requiring strict governance."
+    },
+    {
+      "name": "financial",
+      "description": "Monetary currency, revenue, cost, or tender data."
+    },
+    {
+      "name": "commerce",
+      "description": "E-Commerce order transaction or product catalog attribute."
+    },
+    {
+      "name": "customer-data",
+      "description": "Customer demographic, geography, or status attribute."
+    },
+    {
+      "name": "transactional",
+      "description": "Fact table transaction event record."
+    },
+    {
+      "name": "analytics",
+      "description": "Downstream aggregate or analytical cohort model."
+    },
+    {
+      "name": "derived",
+      "description": "Calculated or aggregated downstream column."
+    },
+    {
+      "name": "reference-data",
+      "description": "Dimension lookup directory metadata."
+    }
+  ]
+}

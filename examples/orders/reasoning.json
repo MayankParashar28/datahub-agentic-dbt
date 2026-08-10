@@ -1,0 +1,66 @@
+{
+  "target_model": "fct_orders",
+  "grain": "one row per transaction order",
+  "sources": [
+    "retail.orders"
+  ],
+  "joins": [],
+  "transformations": [
+    {
+      "expression": "quantity * unit_price",
+      "output": "order_value",
+      "reason": "Derived monetary calculation from available quantity and unit_price fields"
+    }
+  ],
+  "tests": [
+    {
+      "column": "order_id",
+      "test": "unique",
+      "reason": "Primary key identifier"
+    },
+    {
+      "column": "order_id",
+      "test": "not_null",
+      "reason": "Identifier cannot be null"
+    },
+    {
+      "column": "customer_id",
+      "test": "not_null",
+      "reason": "Required customer reference key"
+    }
+  ],
+  "metadata_gaps": [
+    {
+      "gap_type": "UNDEFINED_CURRENCY",
+      "column": "unit_price",
+      "description": "Currency definition unavailable in DataHub metadata",
+      "action_taken": "No currency conversion applied",
+      "confidence": "High"
+    },
+    {
+      "gap_type": "MISSING_DESCRIPTION",
+      "column": "status",
+      "description": "Column status lacks DataHub description",
+      "action_taken": "Passed status through directly without mapping values",
+      "confidence": "High"
+    }
+  ],
+  "assumptions": [
+    "No currency conversion applied because currency metadata is absent",
+    "Assuming status values (COMPLETED, PENDING, CANCELLED) are standardized"
+  ],
+  "explainability": [
+    {
+      "decision": "Add unique and not_null tests to order_id",
+      "evidence": "DataHub column metadata identifies order_id as primary key identifier",
+      "confidence": "High",
+      "section": "Test"
+    },
+    {
+      "decision": "Do not perform currency conversion",
+      "evidence": "No currency metadata available in DataHub context",
+      "confidence": "High",
+      "section": "Gap"
+    }
+  ]
+}

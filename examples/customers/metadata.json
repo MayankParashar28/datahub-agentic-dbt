@@ -1,0 +1,72 @@
+{
+  "urn": "urn:li:dataset:(urn:li:dataPlatform:snowflake,retail.customers,PROD)",
+  "name": "retail.customers",
+  "platform": "snowflake",
+  "description": "Customer dimension metadata storing customer contact info, signup date, and account status.",
+  "columns": [
+    {
+      "name": "customer_id",
+      "data_type": "NUMBER",
+      "description": "Primary key for customer account",
+      "tags": ["Primary_Key"],
+      "glossary_terms": ["Customer_ID"],
+      "is_primary_key": true
+    },
+    {
+      "name": "first_name",
+      "data_type": "VARCHAR(50)",
+      "description": "Customer given first name",
+      "tags": ["PII"]
+    },
+    {
+      "name": "last_name",
+      "data_type": "VARCHAR(50)",
+      "description": "Customer surname / last name",
+      "tags": ["PII"]
+    },
+    {
+      "name": "email",
+      "data_type": "VARCHAR(100)",
+      "description": "Customer primary contact email address",
+      "tags": ["PII", "Sensitive"]
+    },
+    {
+      "name": "signup_date",
+      "data_type": "DATE",
+      "description": "Account registration date",
+      "tags": []
+    },
+    {
+      "name": "country_code",
+      "data_type": "VARCHAR(2)",
+      "description": null,
+      "tags": []
+    },
+    {
+      "name": "account_status",
+      "data_type": "VARCHAR(20)",
+      "description": "Account status (ACTIVE, INACTIVE, SUSPENDED)",
+      "tags": []
+    }
+  ],
+  "upstream": [
+    {
+      "urn": "urn:li:dataset:(urn:li:dataPlatform:postgres,raw_crm.users,PROD)",
+      "name": "raw_crm.users",
+      "platform": "postgres",
+      "relationship_type": "UPSTREAM"
+    }
+  ],
+  "downstream": [
+    {
+      "urn": "urn:li:dataset:(urn:li:dataPlatform:snowflake,analytics.dim_customers,PROD)",
+      "name": "analytics.dim_customers",
+      "platform": "snowflake",
+      "relationship_type": "DOWNSTREAM"
+    }
+  ],
+  "glossary_terms": ["Customer_360", "CRM"],
+  "tags": ["Tier-1", "PII", "GDPR"],
+  "owners": ["sara.crmlead@company.com"],
+  "domain": "Customer Insights"
+}
