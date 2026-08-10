@@ -6,10 +6,11 @@ WORKDIR /code
 COPY requirements.txt /code/requirements.txt
 RUN pip install --no-cache-dir --upgrade -r /code/requirements.txt
 
-# Copy backend source code & demo metadata
-COPY . /code/app
+# Copy source code and metadata into /code
+COPY . /code
 
-# Set environment variables
+# Set PYTHONPATH so app.main imports cleanly
+ENV PYTHONPATH=/code
 ENV PORT=8000
 ENV DEMO_MODE=true
 ENV PYTHONUNBUFFERED=1
