@@ -6,15 +6,14 @@ WORKDIR /code
 COPY requirements.txt /code/requirements.txt
 RUN pip install --no-cache-dir --upgrade -r /code/requirements.txt
 
-# Copy source code and demo datasets
+# Copy backend source code & demo metadata
 COPY . /code/app
-COPY ../demo_datahub /code/demo_datahub
 
-# Set environment variables for Hugging Face Spaces
-ENV PORT=7860
+# Set environment variables
+ENV PORT=8000
 ENV DEMO_MODE=true
 ENV PYTHONUNBUFFERED=1
 
-EXPOSE 7860
+EXPOSE 8000
 
-CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "7860"]
+CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]

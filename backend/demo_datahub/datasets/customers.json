@@ -1,0 +1,121 @@
+{
+  "urn": "urn:li:dataset:fiction-retail.customers",
+  "name": "customers",
+  "platform": "postgres",
+  "database": "fiction_retail",
+  "schema": "public",
+  "description": "Primary customer profile dimension storing customer identity, contact info, geography, and account status.",
+  "domain": "Customer Insights",
+  "owners": ["customer-analytics-team", "retail-data-team"],
+  "tags": ["pii", "customer-data", "reference-data"],
+  "columns": [
+    {
+      "name": "customer_id",
+      "data_type": "BIGINT",
+      "description": "Unique primary business identifier for each customer account.",
+      "nullable": false,
+      "is_primary_key": true,
+      "tags": ["identifier", "customer-data"],
+      "glossary_terms": ["Customer"]
+    },
+    {
+      "name": "first_name",
+      "data_type": "VARCHAR",
+      "description": "Customer given first name.",
+      "nullable": false,
+      "is_primary_key": false,
+      "tags": ["pii"],
+      "glossary_terms": ["Customer"]
+    },
+    {
+      "name": "last_name",
+      "data_type": "VARCHAR",
+      "description": "Customer family surname.",
+      "nullable": false,
+      "is_primary_key": false,
+      "tags": ["pii"],
+      "glossary_terms": ["Customer"]
+    },
+    {
+      "name": "email",
+      "data_type": "VARCHAR",
+      "description": "Primary electronic contact email address.",
+      "nullable": false,
+      "is_primary_key": false,
+      "tags": ["pii"],
+      "glossary_terms": ["Customer"]
+    },
+    {
+      "name": "phone",
+      "data_type": "VARCHAR",
+      "description": "Contact telephone number.",
+      "nullable": true,
+      "is_primary_key": false,
+      "tags": ["pii"],
+      "glossary_terms": []
+    },
+    {
+      "name": "date_of_birth",
+      "data_type": "DATE",
+      "description": "Customer date of birth for age group analytics.",
+      "nullable": true,
+      "is_primary_key": false,
+      "tags": ["pii"],
+      "glossary_terms": ["Customer"]
+    },
+    {
+      "name": "signup_date",
+      "data_type": "DATE",
+      "description": "Date customer account was created.",
+      "nullable": false,
+      "is_primary_key": false,
+      "tags": ["customer-data"],
+      "glossary_terms": ["Customer"]
+    },
+    {
+      "name": "city",
+      "data_type": "VARCHAR",
+      "description": "City of primary residence.",
+      "nullable": true,
+      "is_primary_key": false,
+      "tags": ["customer-data"],
+      "glossary_terms": []
+    },
+    {
+      "name": "state",
+      "data_type": "VARCHAR",
+      "description": "State or province code of residence.",
+      "nullable": true,
+      "is_primary_key": false,
+      "tags": ["customer-data"],
+      "glossary_terms": []
+    },
+    {
+      "name": "country",
+      "data_type": "VARCHAR",
+      "description": "ISO 2-letter country code of residence.",
+      "nullable": false,
+      "is_primary_key": false,
+      "tags": ["customer-data"],
+      "glossary_terms": []
+    },
+    {
+      "name": "customer_status",
+      "data_type": "VARCHAR",
+      "description": "Current account lifecycle status (ACTIVE, INACTIVE, SUSPENDED).",
+      "nullable": false,
+      "is_primary_key": false,
+      "tags": ["customer-data"],
+      "glossary_terms": ["Customer"]
+    },
+    {
+      "name": "created_at",
+      "data_type": "TIMESTAMP",
+      "description": "System record creation timestamp.",
+      "nullable": false,
+      "is_primary_key": false,
+      "tags": [],
+      "glossary_terms": []
+    }
+  ]
+}

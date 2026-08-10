@@ -1,0 +1,38 @@
+{
+  "upstream": {
+    "orders": [
+      "customers",
+      "products",
+      "stores",
+      "payments"
+    ],
+    "monthly_revenue": [
+      "orders",
+      "stores"
+    ],
+    "customer_lifetime_value": [
+      "customers",
+      "orders"
+    ]
+  },
+  "downstream": {
+    "customers": [
+      "orders",
+      "customer_lifetime_value"
+    ],
+    "products": [
+      "orders"
+    ],
+    "stores": [
+      "orders",
+      "monthly_revenue"
+    ],
+    "payments": [
+      "orders"
+    ],
+    "orders": [
+      "monthly_revenue",
+      "customer_lifetime_value"
+    ]
+  }
+}

@@ -1,0 +1,76 @@
+{
+  "urn": "urn:li:dataset:fiction-retail.monthly_revenue",
+  "name": "monthly_revenue",
+  "platform": "postgres",
+  "database": "fiction_retail",
+  "schema": "analytics",
+  "description": "Downstream financial cohort reporting dataset aggregating gross revenue, unit volumes, and net revenue by month and store.",
+  "domain": "Finance",
+  "owners": ["finance-analytics-team", "analytics-team"],
+  "tags": ["analytics", "financial", "derived"],
+  "columns": [
+    {
+      "name": "month",
+      "data_type": "DATE",
+      "description": "First date of reporting calendar month (YYYY-MM-01).",
+      "nullable": false,
+      "is_primary_key": true,
+      "tags": ["analytics"],
+      "glossary_terms": ["Revenue"]
+    },
+    {
+      "name": "store_id",
+      "data_type": "INTEGER",
+      "description": "Store outlet identifier associated with revenue cohort.",
+      "nullable": false,
+      "is_primary_key": true,
+      "tags": ["identifier", "reference-data"],
+      "glossary_terms": ["Store"]
+    },
+    {
+      "name": "total_orders",
+      "data_type": "BIGINT",
+      "description": "Total count of order transactions processed in month.",
+      "nullable": false,
+      "is_primary_key": false,
+      "tags": ["analytics"],
+      "glossary_terms": ["Order"]
+    },
+    {
+      "name": "total_units",
+      "data_type": "BIGINT",
+      "description": "Total quantity of item units sold in month.",
+      "nullable": false,
+      "is_primary_key": false,
+      "tags": ["analytics"],
+      "glossary_terms": ["Order"]
+    },
+    {
+      "name": "gross_revenue",
+      "data_type": "DECIMAL",
+      "description": "Sum of order quantity times unit price before discounts.",
+      "nullable": false,
+      "is_primary_key": false,
+      "tags": ["financial", "analytics"],
+      "glossary_terms": ["Gross Revenue", "Revenue"]
+    },
+    {
+      "name": "discount_amount",
+      "data_type": "DECIMAL",
+      "description": "Total promotional discounts deducted in month.",
+      "nullable": false,
+      "is_primary_key": false,
+      "tags": ["financial", "analytics"],
+      "glossary_terms": ["Net Revenue"]
+    },
+    {
+      "name": "net_revenue",
+      "data_type": "DECIMAL",
+      "description": "Gross revenue minus total discounts.",
+      "nullable": false,
+      "is_primary_key": false,
+      "tags": ["financial", "analytics"],
+      "glossary_terms": ["Net Revenue", "Revenue"]
+    }
+  ]
+}

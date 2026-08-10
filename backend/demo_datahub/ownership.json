@@ -1,0 +1,30 @@
+{
+  "customers": {
+    "owners": ["customer-analytics-team", "retail-data-team"],
+    "technical_owner": "data-platform-team"
+  },
+  "orders": {
+    "owners": ["retail-data-team", "analytics-team"],
+    "technical_owner": "data-platform-team"
+  },
+  "products": {
+    "owners": ["retail-data-team"],
+    "technical_owner": "data-platform-team"
+  },
+  "payments": {
+    "owners": ["finance-analytics-team"],
+    "technical_owner": "data-platform-team"
+  },
+  "stores": {
+    "owners": ["retail-data-team"],
+    "technical_owner": "data-platform-team"
+  },
+  "monthly_revenue": {
+    "owners": ["finance-analytics-team", "analytics-team"],
+    "technical_owner": "data-platform-team"
+  },
+  "customer_lifetime_value": {
+    "owners": ["customer-analytics-team", "analytics-team"],
+    "technical_owner": "data-platform-team"
+  }
+}
