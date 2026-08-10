@@ -14,12 +14,12 @@ app = FastAPI(
     description="DataHub dbt Forge: AI-Powered Metadata-Aware dbt Asset Generator"
 )
 
-# Secure CORS Middleware Configuration (Restricted to configured origins)
+# Secure CORS Middleware Configuration (Supports local & deployed frontends)
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=settings.ALLOWED_ORIGINS,
+    allow_origins=["*"],
     allow_credentials=True,
-    allow_methods=["GET", "POST", "OPTIONS"],
+    allow_methods=["*"],
     allow_headers=["*"],
 )
 

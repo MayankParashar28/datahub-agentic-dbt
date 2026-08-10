@@ -1,6 +1,7 @@
 import { DatasetMetadata, GeneratedArtifacts, WritebackResult } from '../types';
 
-const API_BASE = '/api';
+const BASE_URL = (import.meta as any).env?.VITE_API_BASE_URL || '';
+const API_BASE = `${BASE_URL.replace(/\/$/, '')}/api`;
 
 export async function fetchHealthStatus() {
   const res = await fetch(`${API_BASE}/health`);
