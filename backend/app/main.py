@@ -28,6 +28,17 @@ app.include_router(health.router, prefix="/api", tags=["Health"])
 app.include_router(datasets.router, prefix="/api", tags=["Datasets"])
 app.include_router(generation.router, prefix="/api", tags=["Generation"])
 
+@app.get("/")
+def root_directory():
+    return {
+        "service": settings.APP_NAME,
+        "version": settings.VERSION,
+        "status": "healthy",
+        "docs": "/docs",
+        "health": "/api/health",
+        "datasets": "/api/datasets"
+    }
+
 @app.on_event("startup")
 def startup_security_audit():
     logger.info("=== Security Audit & Configuration Check ===")
