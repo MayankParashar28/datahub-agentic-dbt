@@ -1,5 +1,5 @@
 import logging
-from typing import Optional, List, Dict, Any
+from typing import Optional, List
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
 from app.datahub.client import DataHubClient
@@ -37,11 +37,11 @@ def chat_with_datahub_agent(request: ChatRequest):
         
         # Formulate metadata-aware response
         reply = ""
+        overall_score = metadata.quality_score.overall_score if metadata.quality_score else 85
         
         if "quality" in user_msg or "score" in user_msg or "issue" in user_msg or "gap" in user_msg:
-            score = metadata.quality_score.score if metadata.quality_score else 85
             issues_text = "\n".join([f"- **{g.column}**: {g.description} (`{g.gap_type}`)" for g in metadata.quality_score.gaps]) if metadata.quality_score and metadata.quality_score.gaps else "No critical metadata gaps detected."
-            reply = f"### 📊 Metadata Quality Audit for `{metadata.name}`\n\n**Quality Score**: `{score}/100` ({metadata.quality_score.grade if metadata.quality_score else 'B+'})\n\n**Identified Metadata Gaps**:\n{issues_text}\n\n**Recommendation**: Address undefined currency definitions or missing descriptions in DataHub catalog to boost score to 100/100."
+            reply = f"### 📊 Metadata Quality Audit for `{metadata.name}`\n\n**Quality Score**: `{overall_score}/100`\n\n**Identified Metadata Gaps**:\n{issues_text}\n\n**Recommendation**: Address undefined currency definitions or missing descriptions in DataHub catalog to boost score to 100/100."
             
         elif "lineage" in user_msg or "upstream" in user_msg or "downstream" in user_msg or "depend" in user_msg:
             up_text = ", ".join([f"`{u.name}`" for u in metadata.upstream]) if metadata.upstream else "Primary raw source table (no upstream datasets)."
@@ -56,7 +56,7 @@ def chat_with_datahub_agent(request: ChatRequest):
             reply = f"### 🛠️ Suggested dbt Model Strategy for `{metadata.name}`\n\nTo transform `{metadata.name}` into a production dbt model:\n```sql\nwith source_{metadata.name} as (\n    select * from {{{{ source('fiction_retail', '{metadata.name}') }}}}\n),\nfinal as (\n    select\n        *,\n        current_timestamp() as _loaded_at\n    from source_{metadata.name}\n)\nselect * from final\n```\nClick the **'Generate dbt Pipeline'** button to generate full AST-validated code and `schema.yml` tests!"
             
         else:
-            reply = f"Hello! I am your **DataHub AI Data Assistant**.\n\nI have loaded ground-truth metadata for dataset **`{metadata.name}`** (`{metadata.platform}`).\n\n**Dataset Overview**:\n- **Domain**: `{metadata.domain or 'General'}`\n- **Quality Score**: `{metadata.quality_score.score if metadata.quality_score else 85}/100`\n- **Total Columns**: `{len(metadata.columns)}` fields\n\nHow can I help you transform or audit this dataset today?"
+            reply = f"Hello! I am your **DataHub AI Data Assistant**.\n\nI have loaded ground-truth metadata for dataset **`{metadata.name}`** (`{metadata.platform}`).\n\n**Dataset Overview**:\n- **Domain**: `{metadata.domain or 'General'}`\n- **Quality Score**: `{overall_score}/100`\n- **Total Columns**: `{len(metadata.columns)}` fields\n\nHow can I help you transform or audit this dataset today?"
 
         suggestions = [
             f"Explain quality score for {metadata.name}",

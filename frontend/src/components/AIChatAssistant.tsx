@@ -1,4 +1,4 @@
-11import React, { useState } from 'react';
+import React, { useState } from 'react';
 import { Send, Bot, User, Sparkles, MessageSquare } from 'lucide-react';
 import { DatasetMetadata } from '../types';
 import { sendChatMessage } from '../api/client';
