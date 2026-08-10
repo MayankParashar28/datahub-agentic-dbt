@@ -68,18 +68,14 @@ export const AuthPage: React.FC<AuthPageProps> = ({ onLoginSuccess, onSkipToDemo
             <div className="w-10 h-10 rounded-xl bg-slate-900 border border-cyan-500/40 overflow-hidden shadow-lg shadow-cyan-500/10 p-0.5 shrink-0">
               <img src="/logo.jpg" alt="DataSentinel Logo" className="w-full h-full object-cover rounded-lg" />
             </div>
-            <div>
-              <div className="flex items-center space-x-2">
-                <h1 className="text-xl font-bold tracking-tight text-white flex items-center">
-                  Data<span className="text-cyan-400">Sentinel</span>
-                </h1>
-                <span className="text-[10px] bg-cyan-500/10 text-cyan-400 border border-cyan-500/30 px-2.5 py-0.5 rounded-full font-mono font-bold">
-                  SECURITY CENTER
-                </span>
-              </div>
-              <p className="text-xs text-slate-400 font-medium">
-                AI Data Intelligence & Governance Platform
-              </p>
+            <div className="flex items-center space-x-3">
+              <h1 className="text-base font-bold tracking-tight leading-none text-white flex flex-col">
+                <span>Data</span>
+                <span className="text-cyan-400 font-extrabold">Sentinal</span>
+              </h1>
+              <span className="text-[10px] bg-cyan-500/10 text-cyan-400 border border-cyan-500/30 px-2.5 py-0.5 rounded-full font-mono font-bold self-center">
+                SECURITY CENTER
+              </span>
             </div>
           </div>
         </div>
@@ -103,7 +99,7 @@ export const AuthPage: React.FC<AuthPageProps> = ({ onLoginSuccess, onSkipToDemo
             </h2>
 
             <p className="text-slate-400 text-sm leading-relaxed max-w-2xl font-medium">
-              DataSentinel continuously monitors DataHub datasets, detects anomalies, evaluates schema quality (0–100 score), enforces zero AST hallucinations, and publishes merge-ready dbt pipelines back into DataHub.
+              DataSentinal continuously monitors DataHub datasets, detects anomalies, evaluates schema quality (0–100 score), enforces zero AST hallucinations, and publishes merge-ready dbt pipelines back into DataHub.
             </p>
           </div>
 
@@ -128,7 +124,7 @@ export const AuthPage: React.FC<AuthPageProps> = ({ onLoginSuccess, onSkipToDemo
                   <div className="w-16 h-16 bg-cyan-500/20 border border-cyan-500/40 rounded-full flex items-center justify-center mx-auto text-cyan-400 group-hover:scale-110 transition-transform duration-300 shadow-lg shadow-cyan-500/20">
                     <Video className="w-8 h-8 text-cyan-400" />
                   </div>
-                  <h4 className="text-sm font-bold text-white">Watch DataSentinel Command Center Demo</h4>
+                  <h4 className="text-sm font-bold text-white">Watch DataSentinal Command Center Demo</h4>
                   <p className="text-xs text-slate-400 max-w-sm mx-auto">
                     See Metadata Quality Scoring, <span className="text-cyan-400 font-mono">sqlglot</span> AST validation, and DataHub Glossary Semantic Type Checking in action.
                   </p>
@@ -178,7 +174,7 @@ export const AuthPage: React.FC<AuthPageProps> = ({ onLoginSuccess, onSkipToDemo
               <Star className="w-4 h-4 fill-amber-400" />
             </div>
             <p className="text-xs text-slate-300 italic leading-relaxed">
-              "DataSentinel eliminated 100% of broken dbt deployments across our 50+ data pipelines. The AST hallucination guard and DataHub glossary validation are game-changers for enterprise analytics engineering."
+              "DataSentinal eliminated 100% of broken dbt deployments across our 50+ data pipelines. The AST hallucination guard and DataHub glossary validation are game-changers for enterprise analytics engineering."
             </p>
             <div className="flex items-center space-x-3 pt-1">
               <div className="w-8 h-8 rounded-full bg-cyan-500/20 border border-cyan-500/40 text-cyan-400 font-bold flex items-center justify-center text-xs">
@@ -217,7 +213,7 @@ export const AuthPage: React.FC<AuthPageProps> = ({ onLoginSuccess, onSkipToDemo
                 {isSignUp ? 'Create Workspace' : 'Sign In'}
               </h3>
               <p className="text-xs text-slate-400 font-medium">
-                Enter your details to launch your DataSentinel workspace
+                Enter your details to launch your DataSentinal workspace
               </p>
             </div>
 
@@ -300,7 +296,7 @@ export const AuthPage: React.FC<AuthPageProps> = ({ onLoginSuccess, onSkipToDemo
                 type="submit"
                 className="w-full bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold py-3.5 rounded-xl uppercase tracking-wider shadow-lg shadow-cyan-500/20 transition flex items-center justify-center space-x-2 text-xs hover:scale-[1.01] mt-2"
               >
-                <span>{isSignUp ? 'Enter Sentinel Workspace' : 'Sign In to Command Center'}</span>
+                <span>{isSignUp ? 'Enter Sentinal Workspace' : 'Sign In to Command Center'}</span>
                 <ArrowRight className="w-4 h-4 text-slate-950" />
               </button>
             </form>

@@ -133,16 +133,14 @@ export const DataSentinelDashboard: React.FC<DataSentinelDashboardProps> = ({
             <div className="w-10 h-10 rounded-xl bg-slate-900 border border-cyan-500/40 overflow-hidden shadow-lg shadow-cyan-500/10 p-0.5 shrink-0">
               <img src="/logo.jpg" alt="DataSentinel Logo" className="w-full h-full object-cover rounded-lg" />
             </div>
-            <div>
-              <div className="flex items-center space-x-2">
-                <h1 className="text-lg font-bold text-white tracking-tight flex items-center">
-                  Data<span className="text-cyan-400">Sentinel</span>
-                </h1>
-                <span className="text-[10px] bg-cyan-500/10 text-cyan-400 border border-cyan-500/30 px-2 py-0.5 rounded-full font-mono font-bold">
-                  v2.4
-                </span>
-              </div>
-              <p className="text-xs text-slate-400 font-medium">AI Data Intelligence & Governance Platform</p>
+            <div className="flex items-center space-x-3">
+              <h1 className="text-base font-bold tracking-tight leading-none text-white flex flex-col">
+                <span>Data</span>
+                <span className="text-cyan-400 font-extrabold">Sentinal</span>
+              </h1>
+              <span className="text-[10px] bg-cyan-500/10 text-cyan-400 border border-cyan-500/30 px-2 py-0.5 rounded-full font-mono font-bold self-center">
+                v2.4
+              </span>
             </div>
           </div>
 
@@ -251,7 +249,7 @@ export const DataSentinelDashboard: React.FC<DataSentinelDashboardProps> = ({
             <div className="space-y-6">
               <div className="bg-slate-900/90 border border-slate-800 p-6 rounded-2xl shadow-2xl backdrop-blur-md space-y-2">
                 <div className="text-xl font-bold text-white flex items-center gap-2">
-                  DataSentinel Command Overview <Sparkles className="w-5 h-5 text-cyan-400" />
+                  DataSentinal Command Overview <Sparkles className="w-5 h-5 text-cyan-400" />
                 </div>
                 <p className="text-xs text-slate-400">
                   Ground-truth metadata audit for active dataset: <span className="font-mono text-cyan-400 font-bold">{currentDatasetName}</span>
@@ -427,7 +425,7 @@ export const DataSentinelDashboard: React.FC<DataSentinelDashboardProps> = ({
           {/* Module 8: Settings */}
           {activeNav === 'Settings' && (
             <div className="bg-slate-900/90 border border-slate-800 p-6 rounded-2xl shadow-2xl space-y-6">
-              <h3 className="text-lg font-bold text-white">DataSentinel Settings</h3>
+              <h3 className="text-lg font-bold text-white">DataSentinal Settings</h3>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div className="bg-slate-800/60 border border-slate-700/60 p-5 rounded-xl space-y-2">
                   <Server className="w-5 h-5 text-cyan-400" />

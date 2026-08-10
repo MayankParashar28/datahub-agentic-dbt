@@ -26,11 +26,18 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Register API routes
+# Register API routes (Support both /api prefix and root routes for deployment reverse proxies)
 app.include_router(health.router, prefix="/api", tags=["Health"])
+app.include_router(health.router, prefix="", tags=["Health-Root"])
+
 app.include_router(datasets.router, prefix="/api", tags=["Datasets"])
+app.include_router(datasets.router, prefix="", tags=["Datasets-Root"])
+
 app.include_router(generation.router, prefix="/api", tags=["Generation"])
+app.include_router(generation.router, prefix="", tags=["Generation-Root"])
+
 app.include_router(chat.router, prefix="/api", tags=["Chat"])
+app.include_router(chat.router, prefix="", tags=["Chat-Root"])
 
 @app.get("/")
 def root_directory():
@@ -58,18 +65,7 @@ def keep_alive_heartbeat():
 @app.on_event("startup")
 def startup_security_audit():
     logger.info("=== Security Audit & Configuration Check ===")
-    logger.info(f"Demo Mode: {settings.DEMO_MODE}")
-    logger.info(f"CORS Allowed Origins: {settings.ALLOWED_ORIGINS}")
-    logger.info(f"Anthropic API Key: {mask_secret(settings.ANTHROPIC_API_KEY)}")
-    logger.info(f"OpenAI API Key: {mask_secret(settings.OPENAI_API_KEY)}")
-    logger.info(f"Gemini API Key: {mask_secret(settings.GEMINI_API_KEY)}")
-    logger.info(f"DataHub Token: {mask_secret(settings.DATAHUB_TOKEN)}")
-    logger.info("============================================")
-    
-    # Launch Keep-Alive Heartbeat Thread
-    threading.Thread(target=keep_alive_heartbeat, daemon=True).start()
-    logger.info("[HEARTBEAT] Automated Render keep-alive thread started (10-minute interval).")
-
-if __name__ == "__main__":
-    import uvicorn
-    uvicorn.run("app.main:app", host="0.0.0.0", port=8000, reload=True)
+    logger.info(f"App Name: {settings.APP_NAME}")
+    logger.info(f"Version: {settings.VERSION}")
+    logger.info(f"Demo Mode Active: {settings.DEMO_MODE}")
+    logger.info(f"DataHub GMS URL: {settings.DATAHUB_URL}")

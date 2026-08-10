@@ -23,10 +23,12 @@ class ChatResponse(BaseModel):
     suggestions: List[str]
 
 @router.post("/chat", response_model=ChatResponse)
+@router.post("/api/chat", response_model=ChatResponse)
 def chat_with_datahub_agent(request: ChatRequest):
     """
     Metadata-aware AI Chat Assistant endpoint for DataHub dbt Forge.
     Answers natural language queries regarding datasets, lineage, quality issues, and dbt models.
+    Supports both /chat and /api/chat endpoints for robust deployment proxying.
     """
     try:
         client = DataHubClient()
